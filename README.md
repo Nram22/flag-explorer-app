@@ -36,26 +36,27 @@ The Flag Explorer App is a coding challenge project that:
 
 ```
 FlagExplorerApp/
-├── backend/                   # ASP.NET Core API
-│   ├── Controllers/           # API controllers
-│   ├── Models/                # Data models
-│   ├── Services/              # Service layer and interfaces
-│   ├── Tests/                 # Unit and integration tests for the API
-│   ├── appsettings.json       # Configuration file
-│   └── Program.cs             # Application entry point
-├── frontend/                  # React frontend application
-│   ├── public/                # Public assets (e.g., placeholder.png)
-│   ├── src/
-│   │   ├── __tests__/         # Automated tests for the frontend
-│   │   ├── context/           # React context (CountryProvider)
-│   │   ├── pages/             # React pages/components (Home, Detail)
-│   │   └── App.js             # Main app component with routing
-│   ├── package.json           # Node dependencies and scripts
-│   └── .env                   # Environment configuration (e.g., for jest-junit)
-├── .github/
-│   └── workflows/             # CI/CD pipeline configuration files (backend-ci.yml, frontend-ci.yml)
-├── .gitignore                 # Consolidated ignore file
-└── README.md                  # This file
+|-- backend/                   # ASP.NET Core API
+|   |-- Controllers/           # API controllers
+|   |-- Models/                # Data models
+|   |-- Services/              # Service layer and interfaces
+|   |-- Tests/                 # Unit and integration tests for the API
+|   |-- appsettings.json       # Configuration file
+|   `-- Program.cs             # Application entry point
+|-- frontend/                  # React frontend application
+|   |-- public/                # Public assets (e.g., placeholder.png)
+|   |-- src/
+|   |   |-- tests/             # Automated tests for the frontend
+|   |   |-- context/           # React context (CountryProvider)
+|   |   |-- pages/             # React pages/components (Home, Detail)
+|   |   `-- App.js             # Main app component with routing
+|   |-- package.json           # Node dependencies and scripts
+|   `-- .env                   # Environment configuration (e.g., for jest-junit)
+|-- .github/
+|   `-- workflows/             # CI/CD pipeline configuration files (backend-ci.yml, frontend-ci.yml)
+|-- .gitignore                 # Consolidated ignore file
+`-- README.md                  # This file
+
 ```
 
 ## Prerequisites
