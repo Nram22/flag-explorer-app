@@ -34,7 +34,6 @@ The Flag Explorer App is a coding challenge project that:
 
 ## Repository Structure
 
-```
 FlagExplorerApp/
 |-- backend/                   # ASP.NET Core API
 |   |-- Controllers/           # API controllers
@@ -57,7 +56,6 @@ FlagExplorerApp/
 |-- .gitignore                 # Consolidated ignore file
 `-- README.md                  # This file
 
-```
 
 ## Prerequisites
 
