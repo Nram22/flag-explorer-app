@@ -1,0 +1,48 @@
+# .github/workflows/backend-ci.yml
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore backend
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release backend
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx" backend/Tests
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-test-results
+          path: backend/Tests/test_results.trx
+
+      - name: Publish
+        run: dotnet publish --configuration Release --output ./publish backend
+
+
+      # Deployment to Azure is commented out for this mock project.
+      # - name: Deploy to Azure Web App
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: 'your-app-name'
+      #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #     package: ./publish

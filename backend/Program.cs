@@ -7,6 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add controllers for API endpoints
 builder.Services.AddControllers();
 
+// Configure CORS to allow requests from the React app running on http://localhost:3000
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Register the country service for dependency injection
 builder.Services.AddScoped<ICountryService, CountryService>();
 
@@ -18,6 +29,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// Enable CORS using the defined policy before other middlewares
+app.UseCors("AllowReactApp");
 
 // Enable Swagger UI in development
 if (app.Environment.IsDevelopment())

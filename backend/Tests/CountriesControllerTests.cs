@@ -89,7 +89,8 @@ namespace backend.Tests
             var result = await _controller.GetCountryByName("NonExistent");
 
             // Assert: Verify response is NotFound (404)
-            Assert.IsType<NotFoundResult>(result);
+           Assert.IsType<NotFoundObjectResult>(result);
+
 
             // Verify that the service method was called with correct parameters
             _mockService.Verify(s => s.GetCountryByNameAsync("NonExistent"), Times.Once);

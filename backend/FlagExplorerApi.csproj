@@ -4,11 +4,35 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
+       <!-- .NET Test SDK for running unit tests -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+
+    <!-- MSTest framework dependencies -->
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+
+    <!-- xUnit testing framework -->
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+
+    <!-- Moq for creating mock objects in tests -->
+    <PackageReference Include="Moq" Version="4.20.2" />
+
+    <!-- Coverlet for test coverage reporting -->
+    <PackageReference Include="coverlet.collector" Version="3.2.0" />
+
+    <!-- Newtonsoft.Json for JSON serialization/deserialization -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+
+    <!-- Swashbuckle for API documentation (Swagger) -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+
+    <!-- ASP.NET Core OpenAPI support -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
   </ItemGroup>
 
 </Project>
