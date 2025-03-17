@@ -1,0 +1,13 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Node.js
+node_modules/
+build/
+.env
+
+# VS Code
+.vscode/
