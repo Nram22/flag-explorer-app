@@ -30,7 +30,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx" backend/Tests
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v3.0.1
+        uses: actions/upload-artifact@v2
         with:
           name: backend-test-results
           path: backend/Tests/test_results.trx
