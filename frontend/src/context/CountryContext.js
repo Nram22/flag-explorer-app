@@ -3,13 +3,12 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const CountryContext = createContext();
 
-// CountryProvider fetches the list of countries from the backend API and provides it via context.
 export const CountryProvider = ({ children }) => {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch countries on component mount.
-  useEffect(() => {
+  const fetchCountries = () => {
+    setLoading(true);
     fetch('http://localhost:5083/api/countries')
       .then(response => response.json())
       .then(data => {
@@ -20,10 +19,19 @@ export const CountryProvider = ({ children }) => {
         console.error('Error fetching countries:', error);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchCountries();
   }, []);
 
+  // Expose refresh function.
+  const refreshCountries = () => {
+    fetchCountries();
+  };
+
   return (
-    <CountryContext.Provider value={{ countries, loading }}>
+    <CountryContext.Provider value={{ countries, loading, refreshCountries }}>
       {children}
     </CountryContext.Provider>
   );

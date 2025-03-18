@@ -1,15 +1,14 @@
 // frontend/src/__tests__/Home.test.js
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Home from '../pages/Home';
 import { CountryContext } from '../context/CountryContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// Tests for the Home page.
 describe('Home Page', () => {
   test('renders loading message when data is loading', () => {
     render(
-      <CountryContext.Provider value={{ countries: [], loading: true }}>
+      <CountryContext.Provider value={{ countries: [], loading: true, refreshCountries: jest.fn() }}>
         <Router>
           <Home />
         </Router>
@@ -24,7 +23,7 @@ describe('Home Page', () => {
       { name: 'Germany', flag: 'https://flagcdn.com/de.png' }
     ];
     render(
-      <CountryContext.Provider value={{ countries: testCountries, loading: false }}>
+      <CountryContext.Provider value={{ countries: testCountries, loading: false, refreshCountries: jest.fn() }}>
         <Router>
           <Home />
         </Router>
@@ -32,5 +31,23 @@ describe('Home Page', () => {
     );
     expect(screen.getByText('France')).toBeInTheDocument();
     expect(screen.getByText('Germany')).toBeInTheDocument();
+  });
+
+  test('calls refreshCountries when refresh button is clicked', () => {
+    const mockRefresh = jest.fn();
+    const testCountries = [
+      { name: 'France', flag: 'https://flagcdn.com/fr.png' },
+      { name: 'Germany', flag: 'https://flagcdn.com/de.png' }
+    ];
+    render(
+      <CountryContext.Provider value={{ countries: testCountries, loading: false, refreshCountries: mockRefresh }}>
+        <Router>
+          <Home />
+        </Router>
+      </CountryContext.Provider>
+    );
+    const refreshButton = screen.getByRole('button', { name: /refresh/i });
+    fireEvent.click(refreshButton);
+    expect(mockRefresh).toHaveBeenCalled();
   });
 });
