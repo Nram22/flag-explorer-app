@@ -1,13 +1,14 @@
-// Program.cs
+// backend/Program.cs
 using backend.Services;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add controllers for API endpoints
+// Add controllers for API endpoints.
 builder.Services.AddControllers();
 
-// Configure CORS to allow requests from the React app running on http://localhost:3000
+// Configure CORS to allow requests from the React app running on http://localhost:3000.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
@@ -18,10 +19,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Register the country service for dependency injection
+// Register memory cache and the country service.
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ICountryService, CountryService>();
 
-// Add Swagger for API documentation
+// Add Swagger for API documentation.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -30,10 +32,19 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Enable CORS using the defined policy before other middlewares
+// Prewarm the cache (optional: run as a background task during startup).
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider.GetRequiredService<ICountryService>() as CountryService;
+    if (service != null)
+    {
+        // For simplicity, synchronously wait here. In production, consider an asynchronous startup task.
+        service.PrewarmCacheAsync().Wait();
+    }
+}
+
 app.UseCors("AllowReactApp");
 
-// Enable Swagger UI in development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
