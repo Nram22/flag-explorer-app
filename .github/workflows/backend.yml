@@ -30,8 +30,8 @@ jobs:
         run: dotnet test backend/backend.sln --verbosity normal
 
       - name: Publish
-        run: dotnet publish --configuration Release --output ./publish backend
-
+        run: dotnet publish --configuration Release --output ./publish backend/backend.sln
+      
       # Deployment to Azure is commented out for this mock project.
       # - name: Deploy to Azure Web App
       #   uses: azure/webapps-deploy@v2
