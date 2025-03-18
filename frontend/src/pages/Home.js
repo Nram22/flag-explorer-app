@@ -5,16 +5,33 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Home = () => {
-  const { countries, loading, refreshCountries } = useContext(CountryContext);
+  const { countries, loading, error, refreshCountries } = useContext(CountryContext);
 
   if (loading) {
     return <div className="container text-center mt-5">Loading...</div>;
   }
 
+  if (error) {
+    return (
+      <div className="container text-center mt-5">
+        <img
+          src="/placeholder.png"
+          alt="Placeholder"
+          className="img-fluid mb-3"
+          style={{ maxWidth: '200px' }}
+        />
+        <h2>Unable to load country data.</h2>
+        <p>Please check your network connection or try refreshing.</p>
+        <button onClick={refreshCountries} className="btn btn-primary">
+          Refresh
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="container mt-3">
       <h1 className="mb-4">Flag Explorer</h1>
-      {/* Refresh Button */}
       <button onClick={refreshCountries} className="btn btn-primary mb-3">
         Refresh
       </button>

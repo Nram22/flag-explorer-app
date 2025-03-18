@@ -6,17 +6,25 @@ export const CountryContext = createContext();
 export const CountryProvider = ({ children }) => {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchCountries = () => {
     setLoading(true);
+    setError(null);
     fetch('http://localhost:5083/api/countries')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("API not available");
+        }
+        return response.json();
+      })
       .then(data => {
         setCountries(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching countries:', error);
+      .catch(err => {
+        console.error('Error fetching countries:', err);
+        setError(err);
         setLoading(false);
       });
   };
@@ -25,13 +33,12 @@ export const CountryProvider = ({ children }) => {
     fetchCountries();
   }, []);
 
-  // Expose refresh function.
   const refreshCountries = () => {
     fetchCountries();
   };
 
   return (
-    <CountryContext.Provider value={{ countries, loading, refreshCountries }}>
+    <CountryContext.Provider value={{ countries, loading, error, refreshCountries }}>
       {children}
     </CountryContext.Provider>
   );
