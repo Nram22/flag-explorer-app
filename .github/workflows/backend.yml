@@ -21,17 +21,16 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore backend
+        run: dotnet restore backend/backend.sln
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release backend
+        run: dotnet build --no-restore --configuration Release backend/backend.sln
 
       - name: Run tests
-        run: dotnet test
-        
+        run: dotnet test backend/backend.sln --no-build --verbosity normal
+
       - name: Publish
         run: dotnet publish --configuration Release --output ./publish backend
-
 
       # Deployment to Azure is commented out for this mock project.
       # - name: Deploy to Azure Web App
