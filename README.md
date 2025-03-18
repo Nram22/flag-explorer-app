@@ -133,7 +133,7 @@ Backend tests (e.g., `CountriesControllerTests.cs`) use Moq and xUnit to validat
 To run the tests:
 
 ```bash
-npm test -- --watchAll=false
+npm test
 ```
 
 - **Test Files:**  
@@ -349,7 +349,7 @@ The solution includes YAML configuration files to set up CI/CD pipelines on GitH
   - **Frontend:**  
     ```bash
     npm start
-    npm test -- --watchAll=false
+    npm test
     ```
 - **Vulnerability Warnings:**  
   Run:

@@ -9,6 +9,7 @@
 
   <ItemGroup>
        <!-- .NET Test SDK for running unit tests -->
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="7.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
 
     <!-- MSTest framework dependencies -->

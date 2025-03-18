@@ -1,3 +1,4 @@
+// frontend/src/pages/Detail.js
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,7 +11,13 @@ const Detail = () => {
   useEffect(() => {
     fetch(`http://localhost:5083/api/countries/${name}`)
       .then(response => {
-        if (!response.ok) throw new Error('Country not found');
+        // If the response is 404, return null instead of throwing an error.
+        if (response.status === 404) {
+          return null;
+        }
+        if (!response.ok) {
+          throw new Error('Error fetching country details');
+        }
         return response.json();
       })
       .then(data => {
@@ -19,6 +26,7 @@ const Detail = () => {
       })
       .catch(error => {
         console.error('Error fetching country details:', error);
+        setCountryDetails(null);
         setLoading(false);
       });
   }, [name]);
@@ -27,10 +35,18 @@ const Detail = () => {
     return <div className="container text-center mt-5">Loading...</div>;
   }
 
+  // When data is not available, display the placeholder image and a friendly message.
   if (!countryDetails) {
     return (
       <div className="container text-center mt-5">
-        <h2>Country not found.</h2>
+        <img
+          src="/placeholder.png"
+          alt="Placeholder"
+          className="img-fluid mb-3"
+          style={{ maxWidth: '200px' }}
+        />
+        <h2>Country data not available.</h2>
+        <p>Please try refreshing or check back later.</p>
         <Link to="/">Back to Home</Link>
       </div>
     );
